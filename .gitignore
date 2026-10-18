@@ -1,5 +1,88 @@
+# Dependencies
 node_modules/
-.next/
+.pnp
+.pnp.js
+
+# Build outputs
 dist/
 build/
+.next/
+out/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+ENV/
+*.egg-info/
+
+# Environment & secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+secrets/
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Evidence & uploads (never commit private footage)
+evidence/
+uploads/
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.webm
+
+# Model weights (too large for GitHub)
+models/*.weights
+models/*.pb
+models/*.onnx
+models/*.engine
+models/*.plan
+!models/README.md
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+coverage/
+.nyc_output/
+.pytest_cache/
+
+# Docker
+.docker/
+
+# TensorRT / NVIDIA
+*.trt
+*.engine
+*.plan
+
+# Temporary
+tmp/
+temp/
+*.tmp

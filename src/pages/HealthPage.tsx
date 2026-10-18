@@ -79,7 +79,7 @@ export default function HealthPage() {
     // Stats
     const [dCount, sCount] = await Promise.all([
       db.detections.count(),
-      db.sessions.count(),
+      db.monitoringSessions.count(),
     ]);
     setDetectionCount(dCount);
     setSessionCount(sCount);

@@ -146,7 +146,7 @@ export default function MonitoringPage() {
       endedAt: null,
       errorSummary: null,
     };
-    await db.sessions.add(session);
+    await db.monitoringSessions.add(session);
 
     startProcessing(
       videoRef.current!,
@@ -186,7 +186,7 @@ export default function MonitoringPage() {
     setStatus('stopped');
 
     if (sessionId) {
-      await db.sessions.update(sessionId, {
+      await db.monitoringSessions.update(sessionId, {
         status: 'stopped',
         endedAt: new Date().toISOString(),
       });
