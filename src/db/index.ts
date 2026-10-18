@@ -1,23 +1,32 @@
 import Dexie, { type Table } from 'dexie';
 import type { VideoSource, MonitoringSession, Detection, RestrictedZone, Incident, AppSettings } from '../types';
+import type { User, Session, AuditEntry, Notification } from '../types/auth';
 
 export class VisionGuardDB extends Dexie {
   sources!: Table<VideoSource, string>;
-  sessions!: Table<MonitoringSession, string>;
+  sessions!: Table<Session, string>;
+  monitoringSessions!: Table<MonitoringSession, string>;
   detections!: Table<Detection, string>;
   zones!: Table<RestrictedZone, string>;
   incidents!: Table<Incident, string>;
   settings!: Table<AppSettings & { id: string }, string>;
+  users!: Table<User, string>;
+  auditLog!: Table<AuditEntry, string>;
+  notifications!: Table<Notification, string>;
 
   constructor() {
     super('VisionGuardAI');
-    this.version(1).stores({
+    this.version(2).stores({
       sources: 'id, name, sourceType, enabled, createdAt',
-      sessions: 'id, sourceId, status, startedAt',
+      sessions: 'id, userId, token, expiresAt',
+      monitoringSessions: 'id, sourceId, status, startedAt',
       detections: 'id, sessionId, className, createdAt',
       zones: 'id, sourceId, name, enabled',
       incidents: 'id, sessionId, sourceId, incidentType, severity, status, timestamp, createdAt',
       settings: 'id',
+      users: 'id, email, role, active',
+      auditLog: 'id, timestamp, actorId, action, resourceType',
+      notifications: 'id, type, read, createdAt',
     });
   }
 }

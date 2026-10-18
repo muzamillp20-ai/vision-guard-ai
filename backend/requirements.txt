@@ -1,0 +1,40 @@
+# VisionGuard AI — Backend Dependencies
+# Python 3.9+
+
+# Web framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+pydantic==2.5.2
+pydantic-settings==2.1.0
+
+# Database
+sqlalchemy==2.0.23
+alembic==1.13.0
+psycopg2-binary==2.9.9
+
+# Authentication
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+bcrypt==4.1.2
+
+# Computer Vision (optional — for server-side inference)
+# opencv-python-headless==4.8.1.78
+# ultralytics==8.0.200  # YOLOv8
+# numpy==1.26.2
+
+# TensorRT (optional — requires NVIDIA GPU)
+# tensorrt==8.6.1
+
+# Utilities
+python-dotenv==1.0.0
+aiofiles==23.2.1
+Pillow==10.1.0
+
+# Testing
+pytest==7.4.3
+pytest-asyncio==0.23.2
+httpx==0.25.2
+
+# Logging
+structlog==23.2.0

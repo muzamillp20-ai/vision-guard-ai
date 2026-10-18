@@ -19,7 +19,7 @@ export default function OverviewPage() {
       const [inc, src, sess] = await Promise.all([
         db.incidents.orderBy('timestamp').reverse().limit(5).toArray(),
         db.sources.toArray(),
-        db.sessions.orderBy('startedAt').reverse().limit(5).toArray(),
+        db.monitoringSessions.orderBy('startedAt').reverse().limit(5).toArray(),
       ]);
       setIncidents(inc);
       setSources(src);

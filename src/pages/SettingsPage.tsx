@@ -42,7 +42,11 @@ export default function SettingsPage() {
     await db.sources.clear();
     await db.zones.clear();
     await db.incidents.clear();
+    await db.monitoringSessions.clear();
     await db.sessions.clear();
+    await db.users.clear();
+    await db.auditLog.clear();
+    await db.notifications.clear();
     await db.detections.clear();
     alert('All data cleared. The application will start fresh.');
     window.location.reload();
