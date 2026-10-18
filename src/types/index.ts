@@ -4,11 +4,22 @@ export type SourceType = 'webcam' | 'file';
 
 export type SessionStatus = 'idle' | 'starting' | 'running' | 'paused' | 'stopped' | 'error';
 
-export type IncidentStatus = 'new' | 'acknowledged' | 'resolved';
+export type IncidentStatus = 'open' | 'investigating' | 'resolved' | 'closed';
 
 export type IncidentSeverity = 'low' | 'medium' | 'high' | 'critical';
 
-export type IncidentType = 'zone_intrusion';
+export type IncidentType = 'zone_intrusion' | 'safety_violation' | 'unauthorized_access' | 'equipment_hazard' | 'environmental' | 'other';
+
+export type IncidentOrigin = 'manual' | 'ai_detected';
+
+export type IncidentCategory = 
+  | 'Zone Intrusion'
+  | 'Safety Violation'
+  | 'Unauthorized Access'
+  | 'Equipment Hazard'
+  | 'Environmental'
+  | 'PPE Violation'
+  | 'Other';
 
 export interface VideoSource {
   id: string;
@@ -54,21 +65,57 @@ export interface RestrictedZone {
   updatedAt: string;
 }
 
+export interface IncidentActivity {
+  id: string;
+  timestamp: string;
+  actorId: string | null;
+  actorName: string;
+  action: string;
+  details: string;
+}
+
 export interface Incident {
   id: string;
+  title: string;
   sessionId: string;
   sourceId: string;
   sourceName: string;
   incidentType: IncidentType;
+  category: IncidentCategory;
   severity: IncidentSeverity;
   status: IncidentStatus;
+  origin: IncidentOrigin;
   timestamp: string;
+  location: string;
+  description: string;
   confidence: number;
   evidenceRef: string | null;
+  evidenceItems: string[];
   explanation: string;
   operatorNotes: string;
+  assignedTo: string | null;
+  assignedToName: string | null;
+  tags: string[];
+  resolutionNotes: string | null;
+  resolvedAt: string | null;
+  activity: IncidentActivity[];
+  createdBy: string | null;
+  createdByName: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface IncidentFormData {
+  title: string;
+  category: IncidentCategory;
+  severity: IncidentSeverity;
+  timestamp: string;
+  location: string;
+  description: string;
+  sourceId?: string;
+  assignedTo?: string | null;
+  tags: string[];
+  evidenceDataUrl?: string | null;
 }
 
 export interface DetectionConfig {
@@ -99,16 +146,19 @@ export interface AppSettings {
   targetClass: string;
   evidenceRetentionDays: number;
   severityRules: {
-    high: number; // seconds in zone for high severity
-    critical: number; // seconds in zone for critical
+    high: number;
+    critical: number;
   };
 }
 
 export interface IncidentFilter {
   status?: IncidentStatus;
   severity?: IncidentSeverity;
+  category?: IncidentCategory;
+  origin?: IncidentOrigin;
   sourceId?: string;
   dateFrom?: string;
   dateTo?: string;
   search?: string;
+  sortBy?: 'newest' | 'oldest' | 'severity' | 'updated';
 }

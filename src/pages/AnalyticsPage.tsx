@@ -48,8 +48,9 @@ export default function AnalyticsPage() {
 
   const byStatus = Object.values(
     incidents.reduce((acc, inc) => {
-      if (!acc[inc.status]) acc[inc.status] = { name: inc.status, value: 0 };
-      acc[inc.status].value++;
+      const s = inc.status;
+      if (!acc[s]) acc[s] = { name: s, value: 0 };
+      acc[s].value++;
       return acc;
     }, {} as Record<string, { name: string; value: number }>)
   );
@@ -70,9 +71,10 @@ export default function AnalyticsPage() {
   };
 
   const statusColors: Record<string, string> = {
-    new: '#ef4444',
-    acknowledged: '#f59e0b',
+    open: '#ef4444',
+    investigating: '#f59e0b',
     resolved: '#22c55e',
+    closed: '#6b7280',
   };
 
   return (
@@ -144,8 +146,8 @@ export default function AnalyticsPage() {
         <h3 className="text-sm font-semibold text-gray-900 mb-3">Summary</h3>
         <div className="grid grid-cols-5 gap-4">
           <StatCard label="Total Incidents" value={incidents.length} />
-          <StatCard label="New" value={incidents.filter(i => i.status === 'new').length} />
-          <StatCard label="Acknowledged" value={incidents.filter(i => i.status === 'acknowledged').length} />
+          <StatCard label="Open" value={incidents.filter(i => i.status === 'open').length} />
+          <StatCard label="Investigating" value={incidents.filter(i => i.status === 'investigating').length} />
           <StatCard label="Resolved" value={incidents.filter(i => i.status === 'resolved').length} />
           <StatCard label="Avg Confidence" value={`${(incidents.reduce((s, i) => s + i.confidence, 0) / incidents.length * 100).toFixed(1)}%`} />
         </div>
